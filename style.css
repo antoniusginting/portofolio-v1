@@ -127,10 +127,10 @@ span{
 .btn{
     display: inline-block;
     padding: 1rem 2.8rem;
-    background-color: black;
+    background-color: #47b3e9;
     border-radius: 4rem;
     font-size: 1.6rem;
-    color: #47b3e9;
+    color: black;
     letter-spacing: 0.3rem;
     font-weight: 600;
     border: 2px solid #47b3e9;
@@ -139,8 +139,8 @@ span{
 }
 .btn:hover{
     transform: scale3d(1.03);
-    background-color: #47b3e9;
-    color: black;
+    background-color: black;
+    color: #47b3e9;
     box-shadow: 0 0 25px #47b3e9;
 }
 .typing-text{
@@ -513,7 +513,7 @@ textarea {
     /* justify-content: space-between; */
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #222;
+    background-color: #47b3e9;
     color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -523,6 +523,10 @@ textarea {
     font-weight: bold;
     color: #fff;
     text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+.logo:hover{
+    color:black;
 }
 
 /* Navigation links */
@@ -536,7 +540,7 @@ nav a {
 
 /* Hover effect for links */
 nav a:hover {
-    color: #47b3e9;
+    color: black;
 }
 
 /* Mobile responsiveness */
