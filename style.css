@@ -568,6 +568,10 @@ nav a:hover {
     .home-img{
         padding-top: 170px;
     }
+    
+    .btn{
+        margin-bottom: 10px;
+    }
 }
 
 /* Further optimization for smaller screens */
