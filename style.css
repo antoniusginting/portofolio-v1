@@ -577,6 +577,10 @@ nav a:hover {
         text-decoration: none;
         color: white;
     }
+
+    .btn{
+        margin-bottom: 10px;
+    }
     
     /* Tampilkan menu saat class "active" ditambahkan */
     .nav-links.active {
