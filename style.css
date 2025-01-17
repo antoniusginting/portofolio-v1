@@ -543,36 +543,6 @@ nav a:hover {
     color: black;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-    .navbar-container {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1rem;
-    }
-
-    nav {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        margin-top: 1rem;
-    }
-
-    nav a {
-        margin-left: 0;
-        margin-bottom: 1rem;
-        text-align: center;
-        font-size: 1.2rem;
-    }
-
-    .home-img{
-        padding-top: 170px;
-    }
-    
-    .btn{
-        margin-bottom: 10px;
-    }
-}
 
 /* Further optimization for smaller screens */
 @media (max-width: 480px) {
@@ -582,5 +552,42 @@ nav a:hover {
 
     nav a {
         font-size: 1rem;
+    }
+}
+
+.menu-toggle{
+    display: none;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Menu tersembunyi secara default */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #333;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        gap: 1rem;
+    }
+    
+    .nav-links a {
+        text-decoration: none;
+        color: white;
+    }
+    
+    /* Tampilkan menu saat class "active" ditambahkan */
+    .nav-links.active {
+        display: flex;
+    }
+    .menu-toggle {
+        display: block;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
     }
 }

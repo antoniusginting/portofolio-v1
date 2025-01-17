@@ -10,7 +10,8 @@
 <body>
     <header class="navbar-container">
         <a href="#" class="logo">Portofolio</a>
-        <nav>
+        <button class="menu-toggle" aria-label="Toggle Menu">☰</button>
+        <nav class="nav-links">
             <a href="#" > Home</a>
             <a href="#skills" >Skills</a>
             <a href="#projects" >Experience</a>
@@ -136,5 +137,16 @@
         </div>
         </div>
     </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    menuToggle.addEventListener("click", function () {
+        // Toggle class "active" untuk menampilkan atau menyembunyikan menu
+        navLinks.classList.toggle("active");
+        });
+    });
+    </script>
 </body>
 </html>
