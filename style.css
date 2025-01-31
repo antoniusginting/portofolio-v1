@@ -562,22 +562,9 @@ nav a:hover {
 /* Mobile Styles */
 @media (max-width: 768px) {
     .nav-links {
-        display: none; /* Menu tersembunyi secara default */
         flex-direction: column;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background-color: #333;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        gap: 1rem;
     }
     
-    .nav-links a {
-        text-decoration: none;
-        color: white;
-    }
-
     .btn{
         margin-bottom: 10px;
     }
@@ -585,13 +572,5 @@ nav a:hover {
     /* Tampilkan menu saat class "active" ditambahkan */
     .nav-links.active {
         display: flex;
-    }
-    .menu-toggle {
-        display: block;
-        font-size: 1.5rem;
-        background: none;
-        border: none;
-        color: white;
-        cursor: pointer;
     }
 }
