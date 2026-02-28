@@ -1,152 +1,1759 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Portfolio Website</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <title>Antonius Ginting — Portfolio</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+        }
+
+        :root {
+            --accent: #0af;
+            --accent2: #05ffa1;
+            --dark: #080c10;
+            --dark2: #0e1520;
+            --dark3: #141c28;
+            --text: #c8d8e8;
+            --text-muted: #5a7a96;
+            --border: rgba(0, 170, 255, 0.15);
+        }
+
+        html {
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom cursor - dot only */
+        .cursor {
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 500;
+            background: rgba(8, 12, 16, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            color: var(--accent);
+            letter-spacing: 0.2rem;
+        }
+
+        .logo span {
+            color: var(--text);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.05rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-hire {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            padding: 0.8rem 2rem;
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            color: var(--accent) !important;
+            transition: all 0.3s !important;
+        }
+
+        .nav-hire:hover {
+            background: var(--accent);
+            color: var(--dark) !important;
+        }
+
+        .nav-hire::after {
+            display: none !important;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            color: var(--accent);
+            font-size: 2.4rem;
+            cursor: pointer;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 10rem 6% 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Grid background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+        }
+
+        /* Glowing orb */
+        .orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 170, 255, 0.12) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            pointer-events: none;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(5, 255, 161, 0.06) 0%, transparent 70%);
+            bottom: -50px;
+            left: 10%;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--accent);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.4rem;
+            border-radius: 100px;
+            margin-bottom: 2.5rem;
+            background: rgba(0, 170, 255, 0.05);
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent2);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0.2
+            }
+        }
+
+        .hero-content h1 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(4rem, 6vw, 7rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h1 .name {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .typing-line {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .typing-line .prefix {
+            color: var(--accent2);
+        }
+
+        .typing-line .typed-text {
+            color: #fff;
+            border-right: 2px solid var(--accent);
+            padding-right: 4px;
+            animation: typing-cursor 0.75s step-end infinite;
+        }
+
+        @keyframes typing-cursor {
+
+            0%,
+            100% {
+                border-color: var(--accent)
+            }
+
+            50% {
+                border-color: transparent
+            }
+        }
+
+        .hero-content p {
+            font-size: 1.6rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin-bottom: 3.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3rem;
+            padding: 1.2rem 2.8rem;
+            background: var(--accent);
+            color: var(--dark);
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 0.05rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 170, 255, 0.3);
+        }
+
+        .btn-outline {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3rem;
+            padding: 1.2rem 2.8rem;
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-weight: 400;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 3rem;
+        }
+
+        .social-icons a {
+            width: 4rem;
+            height: 4rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 1.6rem;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0, 170, 255, 0.08);
+            transform: translateY(-3px);
+        }
+
+        /* Profile image */
+        .hero-image {
+            flex-shrink: 0;
+        }
+
+        .profile-frame {
+            position: relative;
+            width: 320px;
+            height: 320px;
+        }
+
+        .profile-frame::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2), transparent, var(--accent));
+            animation: spin 6s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .profile-frame img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--dark);
+        }
+
+        .profile-frame .tag {
+            position: absolute;
+            bottom: 10px;
+            right: -20px;
+            z-index: 2;
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.8rem 1.4rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent2);
+            white-space: nowrap;
+        }
+
+        /* ── SKILLS ── */
+        .skills {
+            padding: 10rem 6%;
+            background: var(--dark2);
+            position: relative;
+        }
+
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--accent);
+            letter-spacing: 0.3rem;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::before {
+            content: '//';
+            color: var(--accent2);
+        }
+
+        .section-title {
+            font-size: clamp(3rem, 4vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            font-size: 1.6rem;
+            color: var(--text-muted);
+            margin-bottom: 5rem;
+            max-width: 500px;
+        }
+
+        .skills-marquee-wrap {
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+        }
+
+        .skills-marquee-wrap:hover .skills-track {
+            animation-play-state: paused;
+        }
+
+        .skills-track {
+            display: flex;
+            gap: 1.5rem;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        .skills-track.reverse {
+            animation: marquee-reverse 35s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes marquee-reverse {
+            from {
+                transform: translateX(-50%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .skill-card {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.6rem 2.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 1.4rem;
+            white-space: nowrap;
+            min-width: 160px;
+        }
+
+        .skill-card:hover {
+            border-color: rgba(0, 170, 255, 0.4);
+            background: rgba(0, 170, 255, 0.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 170, 255, 0.08);
+        }
+
+        .skill-card img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .skill-card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* ── PROJECTS ── */
+        .projects {
+            padding: 10rem 6%;
+            background: var(--dark);
+            overflow: hidden;
+        }
+
+        .projects-grid-wrap {
+            position: relative;
+        }
+
+        .projects-grid {
+            display: flex;
+            flex-direction: row;
+            gap: 2.5rem;
+            overflow: hidden;
+            justify-content: center;
+        }
+
+        .project-card {
+            flex: 0 1 340px;
+            min-width: 0;
+            scroll-snap-align: start;
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            border-color: rgba(0, 170, 255, 0.35);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.04);
+        }
+
+        .project-img-wrap {
+            overflow: hidden;
+        }
+
+        .project-body {
+            padding: 2.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent2);
+            margin-bottom: 1rem;
+        }
+
+        .project-body h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            line-height: 1.3;
+            color: #fff;
+        }
+
+        .project-body p {
+            font-size: 1.4rem;
+            line-height: 1.75;
+            color: var(--text-muted);
+            flex: 1;
+        }
+
+        .project-footer {
+            padding: 1.5rem 2.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-pill {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark2);
+            border-top: 1px solid var(--border);
+            padding: 4rem 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 3.6rem;
+            height: 3.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .footer-copy {
+            width: 100%;
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 900px) {
+            .hero-inner {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .profile-frame {
+                width: 240px;
+                height: 240px;
+            }
+
+            .profile-frame .tag {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                max-width: 300px;
+                background: var(--dark2);
+                flex-direction: column;
+                justify-content: center;
+                padding: 4rem;
+                gap: 3rem;
+                border-left: 1px solid var(--border);
+                transition: right 0.35s ease;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-badge {
+                font-size: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .proj-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+        }
+
+        .proj-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .proj-dots {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .proj-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .proj-dot.active {
+            width: 20px;
+            border-radius: 10px;
+            background: var(--accent);
+        }
+
+        .proj-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--dark2);
+            color: var(--text);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .proj-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0, 170, 255, 0.08);
+        }
+
+        .proj-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+            border-color: var(--border);
+            color: var(--text-muted);
+            background: transparent;
+        }
+
+        /* Card transition */
+        .project-card {
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .project-card.hidden-card {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── PROJECT IMAGE GALLERY ── */
+        .project-gallery {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+            background: var(--dark3);
+        }
+
+        .gallery-main {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+            cursor: zoom-in;
+        }
+
+        .project-card:hover .gallery-main {
+            transform: scale(1.04);
+        }
+
+        /* Thumbnail strip */
+        .gallery-thumbs {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 4px;
+            padding: 6px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover .gallery-thumbs {
+            opacity: 1;
+        }
+
+        .gallery-thumb {
+            width: 44px;
+            height: 34px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1.5px solid transparent;
+            transition: border-color 0.2s, transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .gallery-thumb.active {
+            border-color: var(--accent);
+        }
+
+        .gallery-thumb:hover {
+            transform: scale(1.08);
+        }
+
+        /* Image count badge */
+        .gallery-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            color: var(--text);
+            padding: 0.3rem 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        /* ── LIGHTBOX ── */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lb-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(10px);
+            cursor: zoom-out;
+        }
+
+        .lb-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .lb-img-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lb-img {
+            max-width: 88vw;
+            max-height: 75vh;
+            border-radius: 12px;
+            object-fit: contain;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            display: block;
+            transition: opacity 0.2s ease;
+        }
+
+        .lb-img.fading {
+            opacity: 0;
+        }
+
+        .lb-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1.6rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            backdrop-filter: blur(6px);
+        }
+
+        .lb-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--dark);
+        }
+
+        .lb-prev {
+            left: -60px;
+        }
+
+        .lb-next {
+            right: -60px;
+        }
+
+        .lb-close {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+
+        .lb-close:hover {
+            background: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .lb-caption {
+            text-align: center;
+        }
+
+        .lb-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.4rem;
+        }
+
+        .lb-counter {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        /* Thumbnail strip in lightbox */
+        .lb-thumbs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 600px;
+        }
+
+        .lb-thumb {
+            width: 56px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+
+        .lb-thumb.active {
+            border-color: var(--accent);
+            opacity: 1;
+        }
+
+        .lb-thumb:hover {
+            opacity: 0.85;
+        }
+
+        @media (max-width: 600px) {
+            .lb-prev {
+                left: -46px;
+            }
+
+            .lb-next {
+                right: -46px;
+            }
+
+            .lb-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <header class="navbar-container">
-        <a href="#" class="logo">Portofolioe</a>
-        <button class="menu-toggle" aria-label="Toggle Menu">☰</button>
-        <nav class="nav-links">
-            <a href="#" > Home</a>
-            <a href="#skills" >Skills</a>
-            <a href="#projects" >Experience</a>
-            <a href="https://wa.link/ahp9ed" >Contact</a>
-        </nav>
-    </header>
-    <section class="home">
-        <div class="home-img">
-            <img src="image/profile.jpg" alt="">
-        </div>
-        <div class="home-content">
-            <h1>Hi, It's <span>Antonius Ginting</span></h1>
-            <h3 class="typing-text">I'm a <span></span></h3>
-            <p>I’m a passionate Back-End Developer with expertise in Laravel and a keen interest in building efficient and scalable web applications.
-                As a fresh graduate in Information Systems from Universitas Methodist Indonesia, I’ve honed my skills through various projects, including a K-Means Clustering system for social aid distribution and other web-based applications.
-                
-            </p>
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/antonius-ginting/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://github.com/antoniusginting" target="_blank"><i class="fa-brands fa-github"></i></a>
-                <!-- <a href=""><i class="fa-brands fa-x-twitter"></i></a> -->
-                <a href="https://www.instagram.com/antoniusginting13/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-            </div>
-            <a href="https://wa.link/ahp9ed" target="_blank" class="btn">Hire me</a>
-            <a href="CV.pdf" target="_blank" class="btn">Download CV</a>
-        </div>
-    </section>
 
-    <section class="skills" id="skills">
-        <div class="container">
-            <h2>My Skills</h2>
-            <p>Here are some of the programming languages and frameworks I am skilled in:</p>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <img src="https://logodownload.org/wp-content/uploads/2016/10/html5-logo.png" alt="HTML">
-                    <h3>HTML</h3>
-                </div>
-                <div class="skill-item">
-                    <img src="https://logodownload.org/wp-content/uploads/2017/04/css-3-logo.png" alt="CSS">
-                    <h3>CSS</h3>
-                </div>
-                <div class="skill-item">
-                    <img src="https://tse1.mm.bing.net/th/id/OIP.9jAkFPGpe5YO-8RM0Le_XgHaIa?rs=1&pid=ImgDetMain" alt="JavaScript">
-                    <h3>JavaScript</h3>
-                </div>
-                <div class="skill-item">
-                    <img src="https://tse1.mm.bing.net/th/id/OIP.pkqphAig1t-PCsy4dkVrfAHaD5?rs=1&pid=ImgDetMain" alt="PHP">
-                    <h3>PHP</h3>
-                </div>
-                <div class="skill-item">
-                    <img src="https://tse3.mm.bing.net/th/id/OIP.Hh_tEbIb4-MagJsV6x_RZwHaHa?rs=1&pid=ImgDetMain" alt="Laravel">
-                    <h3>Laravel</h3>
-                </div>
-                <div class="skill-item">
-                    <img src="https://tse1.mm.bing.net/th/id/OIP.33CwBYkmnMfpA9Djup22JwHaHa?rs=1&pid=ImgDetMain" alt="React JS">
-                    <h3>React</h3>
-                </div>
-                <div class="skill-item">
-                    <img src="https://tse4.mm.bing.net/th/id/OIP.LOkNVysZMaPe_6cHJNVn9gHaHa?rs=1&pid=ImgDetMain" alt="Bootstrap">
-                    <h3>Bootstrap</h3>
-                </div>
-                <div class="skill-item">
-                    <img src="https://tse3.mm.bing.net/th/id/OIP.GzwNcLewBwyBkK1mBCxoPQHaHa?rs=1&pid=ImgDetMain" alt="Node.js">
-                    <h3>Node.js</h3>
-                </div>
-                <div class="skill-item">
-                    <img src="https://tse1.mm.bing.net/th/id/OIP.WMUyMA6k8m06DlgL9MHVDgHaHa?rs=1&pid=ImgDetMain" alt="Tailwind">
-                    <h3>Taillwind</h3>
-                </div>
-                <div class="skill-item">
-                    <img src="https://tse3.mm.bing.net/th/id/OIP.-clCRotMTDkkIpeLClXBsAHaHa?rs=1&pid=ImgDetMain" alt="Vite">
-                    <h3>Vite</h3>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="cursor" id="cursor"></div>
 
-    <section class="projects" id="projects">
-        <div class="container">
-            <h2>My Projects</h2>
-            <p>Here are some of the projects I've worked on:</p>
-            <div class="projects-grid">
-                <div class="project-item">
-                    <img src="image/gbkp.jpg" alt="Project 1">
-                    <h3>Sistem Pendataan Jemaat GBKP Pasar VI</h3>
-                    <p>Sistem ini adalah tugas akhir dalam menyelesaikan skripsi saya, dan juga membantu Gereja dalam mendata jemaat yang kurang mampu dan mampu dengan menggunakan algoritma K-Means. Untuk menyalurkan bantuan sosial lebih merata ke jemaat yang kurang mampu, menggunakan framework Laravel</p>
-                    <!-- <a href="#" class="btn">View Project</a> -->
-                </div>
-                <div class="project-item">
-                    <img src="image/semantik.jpg" alt="Project 2">
-                    <h3>Halaman Website Sederhana</h3>
-                    <p>Project ini adalah hasil dari submission Course Dicoding yaitu membuat Halaman Website menggunakan teknik semantic HTML dan Layouting, dibuat dengan HTML, CSS, Javascript</p>
-                    <!-- <a href="#" class="btn">View Project</a> -->
-                </div>
-                <div class="project-item">
-                    <img src="image/bookshelf.jpg" alt="Project 3">
-                    <h3>Bookshelf APP</h3>
-                    <p>Project ini adalah hasil dari submission Course Dicoding yaitu membuat Bookshelf APP, dengan memanfaat kan fitur penyimpanan menggunakan web storage, APP ini dibuat dengan Html, Javascript, Bootstrap</p>
-                    <!-- <a href="#" class="btn">View Project</a> -->
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-container">
-        <div class="footer-logo">
-            <h2>My Portfolio</h2>
-        </div>
-        <div class="footer-links">
-            <a href="/">Home</a>
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <a href="#" class="logo">AG<span>.dev</span></a>
+        <button class="menu-toggle" aria-label="Toggle Menu" id="menuToggle">☰</button>
+        <nav class="nav-links" id="navLinks">
+            <a href="#">Home</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
+            <a href="https://wa.link/ahp9ed" class="nav-hire">Hire Me</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="orb"></div>
+        <div class="orb orb2"></div>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Available for work
+                </div>
+                <h1>Hi, I'm<br><span class="name">Antonius Ginting</span></h1>
+                <div class="typing-line">
+                    <span class="prefix">&gt;_</span>
+                    <span class="typed-text" id="typedText">Back-End Developer</span>
+                </div>
+                <p>Fresh graduate in Information Systems from Universitas Methodist Indonesia. Passionate about building
+                    efficient and scalable web applications with Laravel and modern web technologies.</p>
+                <div class="hero-actions">
+                    <a href="https://wa.link/ahp9ed" target="_blank" class="btn-primary">
+                        <i class="fa-solid fa-paper-plane"></i> Hire Me
+                    </a>
+                    <a href="CV1.pdf" target="_blank" class="btn-outline">
+                        <i class="fa-solid fa-download"></i> Download CV
+                    </a>
+                </div>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/antonius-ginting/" target="_blank"><i
+                            class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com/antoniusginting" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.instagram.com/antoniusginting13/" target="_blank"><i
+                            class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="profile-frame">
+                    <img src="image/profile.jpg" alt="Antonius Ginting">
+                    <div class="tag">💻 Laravel Dev</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills" id="skills">
+        <div class="section-label">Expertise</div>
+        <h2 class="section-title">My Skills</h2>
+        <p class="section-desc">Languages, frameworks, and tools I work with daily to build great software.</p>
+        <div class="skills-marquee-wrap">
+            <!-- Baris 1 — kiri -->
+            <div class="skills-track">
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-plain-wordmark.svg">
+                    <h3>HTML</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-plain-wordmark.svg">
+                    <h3>CSS</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg">
+                    <h3>JavaScript</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg">
+                    <h3>PHP</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-plain-wordmark.svg">
+                    <h3>HTML</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-plain-wordmark.svg">
+                    <h3>CSS</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg">
+                    <h3>JavaScript</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg">
+                    <h3>PHP</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-plain-wordmark.svg">
+                    <h3>HTML</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-plain-wordmark.svg">
+                    <h3>CSS</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg">
+                    <h3>JavaScript</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg">
+                    <h3>PHP</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-plain-wordmark.svg">
+                    <h3>HTML</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-plain-wordmark.svg">
+                    <h3>CSS</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg">
+                    <h3>JavaScript</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg">
+                    <h3>PHP</h3>
+                </div>
+            </div>
+            <!-- Baris 2 — kanan -->
+            <div class="skills-track reverse">
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg">
+                    <h3>Laravel</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/livewire/livewire-original.svg">
+                    <h3>Livewire</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg">
+                    <h3>Bootstrap</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg">
+                    <h3>Tailwind</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg">
+                    <h3>Laravel</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/livewire/livewire-original.svg">
+                    <h3>Livewire</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg">
+                    <h3>Bootstrap</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg">
+                    <h3>Tailwind</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg">
+                    <h3>Laravel</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/livewire/livewire-original.svg">
+                    <h3>Livewire</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg">
+                    <h3>Bootstrap</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg">
+                    <h3>Tailwind</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg">
+                    <h3>Laravel</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/livewire/livewire-original.svg">
+                    <h3>Livewire</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg">
+                    <h3>Bootstrap</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg">
+                    <h3>Tailwind</h3>
+                </div>
+            </div>
+            <!-- Baris 3 — kiri -->
+            <div class="skills-track">
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg">
+                    <h3>Node.js</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg">
+                    <h3>Vite</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/filamentphp/filamentphp-original.svg">
+                    <h3>FilamentPHP</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg">
+                    <h3>MySQL</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg">
+                    <h3>Node.js</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg">
+                    <h3>Vite</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/filamentphp/filamentphp-original.svg">
+                    <h3>FilamentPHP</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg">
+                    <h3>MySQL</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg">
+                    <h3>Node.js</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg">
+                    <h3>Vite</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/filamentphp/filamentphp-original.svg">
+                    <h3>FilamentPHP</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg">
+                    <h3>MySQL</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg">
+                    <h3>Node.js</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg">
+                    <h3>Vite</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/filamentphp/filamentphp-original.svg">
+                    <h3>FilamentPHP</h3>
+                </div>
+                <div class="skill-card"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg">
+                    <h3>MySQL</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects" id="projects">
+        <div class="proj-nav">
+            <div>
+                <div class="section-label">Work</div>
+                <h2 class="section-title">My Projects</h2>
+                <p class="section-desc">A selection of things I've built so far.</p>
+            </div>
+            <div class="proj-nav-right">
+                <div class="proj-dots" id="projDots"></div>
+                <button class="proj-btn" id="projPrev"><i class="fa-solid fa-arrow-left"></i></button>
+                <button class="proj-btn" id="projNext"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+        <div class="projects-grid-wrap">
+            <div class="projects-grid" id="projectsGrid">
+
+                <!-- Project 1 — ganti nama file sesuai gambar kamu -->
+                <div class="project-card reveal" data-images='["image/gbkp.jpg","image/gbkp1.png","image/gbkp2.png"]'
+                    data-title="Sistem Pendataan Jemaat GBKP Pasar VI">
+                    <div class="project-gallery">
+                        <img class="gallery-main" src="image/gbkp.jpg" alt="GBKP">
+                        <div class="gallery-count"><i class="fa-solid fa-images"></i> 3</div>
+                        <div class="gallery-thumbs">
+                            <img class="gallery-thumb active" src="image/gbkp.jpg" alt="foto 1">
+                            <img class="gallery-thumb" src="image/gbkp1.png" alt="foto 2">
+                            <img class="gallery-thumb" src="image/gbkp2.png" alt="foto 3">
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-tag">// Skripsi</span>
+                        <h3>Sistem Pendataan Jemaat GBKP Pasar VI</h3>
+                        <p>Sistem berbasis web untuk mendata jemaat dan menyalurkan bantuan sosial menggunakan algoritma
+                            K-Means Clustering agar distribusi lebih merata kepada yang membutuhkan.</p>
+                    </div>
+                    <div class="project-footer">
+                        <div class="tech-stack">
+                            <span class="tech-pill">Laravel</span>
+                            <span class="tech-pill">K-Means</span>
+                            <span class="tech-pill">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 — ganti nama file sesuai gambar kamu -->
+                <div class="project-card reveal" data-images='["image/bis.png","image/bis1.png","image/bis2.png"]'
+                    data-title="Bonarjaya Integrated System">
+                    <div class="project-gallery">
+                        <img class="gallery-main" src="image/bis.png" alt="Semantic HTML">
+                        <div class="gallery-count"><i class="fa-solid fa-images"></i> 3</div>
+                        <div class="gallery-thumbs">
+                            <img class="gallery-thumb active" src="image/bis.png" alt="foto 1">
+                            <img class="gallery-thumb" src="image/bis1.png" alt="foto 2">
+                            <img class="gallery-thumb" src="image/bis2.png" alt="foto 3">
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-tag">// CV Bonarjaya Adiperkasa</span>
+                        <h3>Bonarjaya Integrated System</h3>
+                        <p>Sistem berbasis web untuk mengelola data perusahaan dan memudahkan proses bisnis.
+                            sistem ini dibangun menggunakan Laravel Filament dengan fitur autentikasi, manajemen data,
+                            dan
+                            laporan yang komprehensif.
+                        </p>
+                    </div>
+                    <div class="project-footer">
+                        <div class="tech-stack">
+                            <span class="tech-pill">Laravel</span>
+                            <span class="tech-pill">Filament</span>
+                            <span class="tech-pill">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 — ganti nama file sesuai gambar kamu -->
+                <div class="project-card reveal" data-images='["image/logistik.png","image/logistik1.png"]'
+                    data-title="Logistik System">
+                    <div class="project-gallery">
+                        <img class="gallery-main" src="image/logistik.png" alt="logistik">
+                        <div class="gallery-count"><i class="fa-solid fa-images"></i> 2</div>
+                        <div class="gallery-thumbs">
+                            <img class="gallery-thumb active" src="image/logistik.png" alt="foto 1">
+                            <img class="gallery-thumb" src="image/logistik1.png" alt="foto 2">
+                            <!-- <img class="gallery-thumb" src="image/logistik.jpg" alt="foto 3"> -->
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-tag">// CV Bonarjaya Adiperkasa</span>
+                        <h3>Logistik System</h3>
+                        <p>Sistem berbasis web untuk mengelola data logistik perusahaan dan memudahkan proses pelacakan
+                            barang.
+                            sistem ini dibangun menggunakan Laravel Filament dengan fitur autentikasi, manajemen data,
+                            dan laporan yang
+                            komprehensif. dan juga sudah terintegrasi dengan sistem lainnya.</p>
+                    </div>
+                    <div class="project-footer">
+                        <div class="tech-stack">
+                            <span class="tech-pill">Laravel</span>
+                            <span class="tech-pill">Filament</span>
+                            <span class="tech-pill">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 — dummy -->
+                <div class="project-card reveal" data-images='["image/semantik.jpg"]'
+                    data-title="Halaman Website Sederhana">
+                    <div class="project-gallery">
+                        <img class="gallery-main" src="image/semantik.jpg" alt="Semantic HTML">
+                        <div class="gallery-count"><i class="fa-solid fa-images"></i> 1</div>
+                        <div class="gallery-thumbs">
+                            <img class="gallery-thumb active" src="image/semantik.jpg" alt="foto 1">
+                            <!-- <img class="gallery-thumb"        src="image/semantik.jpg" alt="foto 2">
+                        <img class="gallery-thumb"        src="image/semantik.jpg" alt="foto 3"> -->
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-tag">// Dicoding</span>
+                        <h3>Halaman Website Sederhana</h3>
+                        <p>Submission Dicoding — membuat halaman website modern menggunakan teknik semantic HTML dan
+                            layouting yang baik dan benar.</p>
+                    </div>
+                    <div class="project-footer">
+                        <div class="tech-stack">
+                            <span class="tech-pill">HTML</span>
+                            <span class="tech-pill">CSS</span>
+                            <span class="tech-pill">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 — dummy -->
+                <div class="project-card reveal" data-images='["image/bookshelf.jpg"]' data-title="Bookshelf App">
+                    <div class="project-gallery">
+                        <img class="gallery-main" src="image/bookshelf.jpg" alt="Bookshelf">
+                        <div class="gallery-count"><i class="fa-solid fa-images"></i> 1</div>
+                        <div class="gallery-thumbs">
+                            <img class="gallery-thumb active" src="image/bookshelf.jpg" alt="foto 1">
+                            <!-- <img class="gallery-thumb" src="image/bookshelf.jpg" alt="foto 2">
+                            <img class="gallery-thumb" src="image/bookshelf.jpg" alt="foto 3"> -->
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-tag">// Dicoding</span>
+                        <h3>Bookshelf App</h3>
+                        <p>Aplikasi manajemen buku menggunakan Web Storage API untuk menyimpan data secara lokal,
+                            dibangun tanpa framework apapun.</p>
+                    </div>
+                    <div class="project-footer">
+                        <div class="tech-stack">
+                            <span class="tech-pill">HTML</span>
+                            <span class="tech-pill">JS</span>
+                            <span class="tech-pill">Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-logo">AG<span style="color:var(--text-muted)">.dev</span></div>
+        <div class="footer-links">
+            <a href="#">Home</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="https://wa.link/ahp9ed">Contact</a>
         </div>
         <div class="footer-social">
-            <a href="https://www.linkedin.com/in/antonius-ginting/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.linkedin.com/in/antonius-ginting/" target="_blank"><i
+                    class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/antoniusginting" target="_blank"><i class="fa-brands fa-github"></i></a>
-            <a href="https://www.instagram.com/antoniusginting13/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.instagram.com/antoniusginting13/" target="_blank"><i
+                    class="fa-brands fa-instagram"></i></a>
         </div>
-        <div class="footer-copyright">
-            <p>&copy; 2025 My Portfolio. All Rights Reserved.</p>
-        </div>
-        </div>
+        <div class="footer-copy">&copy; 2025 Antonius Ginting. All rights reserved.</div>
     </footer>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    const menuToggle = document.querySelector(".menu-toggle");
-    const navLinks = document.querySelector(".nav-links");
 
-    menuToggle.addEventListener("click", function () {
-        // Toggle class "active" untuk menampilkan atau menyembunyikan menu
-        navLinks.classList.toggle("active");
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <div class="lb-backdrop" id="lbBackdrop"></div>
+        <button class="lb-close" id="lbClose"><i class="fa-solid fa-xmark"></i></button>
+        <div class="lb-inner">
+            <div class="lb-img-wrap">
+                <button class="lb-btn lb-prev" id="lbPrev"><i class="fa-solid fa-chevron-left"></i></button>
+                <img class="lb-img" id="lbImg" src="" alt="">
+                <button class="lb-btn lb-next" id="lbNext"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="lb-caption">
+                <div class="lb-title" id="lbTitle"></div>
+                <div class="lb-counter" id="lbCounter"></div>
+            </div>
+            <div class="lb-thumbs" id="lbThumbs"></div>
+        </div>
+    </div>
+
+    <script>
+        // ── Custom cursor ──
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         });
-    });
+
+        // ── Typing animation ──
+        const words = ['Fullstack Developer', 'Laravel Enthusiast','FilamentPHP Developer'];
+        let wi = 0, ci = 0, deleting = false;
+        const el = document.getElementById('typedText');
+        function type() {
+            const w = words[wi];
+            el.textContent = deleting ? w.slice(0, ci--) : w.slice(0, ci++);
+            if (!deleting && ci > w.length) { setTimeout(() => deleting = true, 1500); }
+            else if (deleting && ci < 0) { deleting = false; wi = (wi + 1) % words.length; ci = 0; }
+            setTimeout(type, deleting ? 60 : 100);
+        }
+        type();
+
+        // ── Mobile menu ──
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // ── Project carousel ──
+        const projGrid = document.getElementById('projectsGrid');
+        const projPrev = document.getElementById('projPrev');
+        const projNext = document.getElementById('projNext');
+        const dotsWrap = document.getElementById('projDots');
+        const cards = Array.from(projGrid.querySelectorAll('.project-card'));
+        const perPage = () => window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+        let page = 0;
+
+        function totalPages() { return Math.ceil(cards.length / perPage()); }
+
+        function buildDots() {
+            dotsWrap.innerHTML = '';
+            for (let i = 0; i < totalPages(); i++) {
+                const d = document.createElement('div');
+                d.className = 'proj-dot' + (i === page ? ' active' : '');
+                d.addEventListener('click', () => goPage(i));
+                dotsWrap.appendChild(d);
+            }
+        }
+
+        function goPage(p) {
+            page = Math.max(0, Math.min(p, totalPages() - 1));
+            const pp = perPage();
+            const start = page * pp;
+            cards.forEach((c, i) => {
+                c.style.display = (i >= start && i < start + pp) ? '' : 'none';
+            });
+            projPrev.disabled = page === 0;
+            projNext.disabled = page >= totalPages() - 1;
+            dotsWrap.querySelectorAll('.proj-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === page);
+            });
+        }
+
+        projPrev.addEventListener('click', () => goPage(page - 1));
+        projNext.addEventListener('click', () => goPage(page + 1));
+        window.addEventListener('resize', () => { buildDots(); goPage(0); });
+
+        buildDots();
+        goPage(0);
+
+        // ── Scroll reveal ──
+        const reveals = document.querySelectorAll('.reveal');
+        const io = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    e.target.style.transitionDelay = (i % 5) * 0.08 + 's';
+                    e.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        reveals.forEach(r => io.observe(r));
+
+        // ── Gallery & Lightbox ──
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lbImg');
+        const lbTitle = document.getElementById('lbTitle');
+        const lbCounter = document.getElementById('lbCounter');
+        const lbThumbs = document.getElementById('lbThumbs');
+
+        let lbImages = [], lbIndex = 0;
+
+        function openLightbox(images, index, title) {
+            lbImages = images;
+            lbTitle.textContent = title;
+            // Build thumbnails
+            lbThumbs.innerHTML = images.map((src, i) =>
+                `<img class="lb-thumb${i === index ? ' active' : ''}" src="${src}" data-i="${i}" alt="">`
+            ).join('');
+            lbThumbs.querySelectorAll('.lb-thumb').forEach(t => {
+                t.addEventListener('click', () => goTo(+t.dataset.i));
+            });
+            goTo(index, false);
+            lb.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lb.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function goTo(i, animate = true) {
+            i = (i + lbImages.length) % lbImages.length;
+            lbIndex = i;
+            if (animate) lbImg.classList.add('fading');
+            setTimeout(() => {
+                lbImg.src = lbImages[i];
+                lbCounter.textContent = `${i + 1} / ${lbImages.length}`;
+                lbImg.classList.remove('fading');
+            }, animate ? 180 : 0);
+            // Update thumbs
+            lbThumbs.querySelectorAll('.lb-thumb').forEach((t, idx) => {
+                t.classList.toggle('active', idx === i);
+            });
+        }
+
+        document.getElementById('lbClose').addEventListener('click', closeLightbox);
+        document.getElementById('lbBackdrop').addEventListener('click', closeLightbox);
+        document.getElementById('lbPrev').addEventListener('click', () => goTo(lbIndex - 1));
+        document.getElementById('lbNext').addEventListener('click', () => goTo(lbIndex + 1));
+
+        document.addEventListener('keydown', e => {
+            if (!lb.classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') goTo(lbIndex - 1);
+            if (e.key === 'ArrowRight') goTo(lbIndex + 1);
+        });
+
+        // Attach gallery interactions to every project card
+        document.querySelectorAll('.project-card').forEach(card => {
+            const images = JSON.parse(card.dataset.images || '[]');
+            const title = card.dataset.title || '';
+            const mainImg = card.querySelector('.gallery-main');
+            const thumbs = card.querySelectorAll('.gallery-thumb');
+            let currentIndex = 0;
+
+            function setActive(i) {
+                currentIndex = i;
+                mainImg.src = images[i];
+                thumbs.forEach((t, idx) => t.classList.toggle('active', idx === i));
+            }
+
+            // Thumbnail hover → swap main image
+            thumbs.forEach((thumb, i) => {
+                thumb.addEventListener('mouseenter', () => setActive(i));
+            });
+
+            // Click main image → open lightbox at current index
+            mainImg.addEventListener('click', () => {
+                openLightbox(images, currentIndex, title);
+            });
+
+            // Click thumbnail → open lightbox at that index
+            thumbs.forEach((thumb, i) => {
+                thumb.addEventListener('click', e => {
+                    e.stopPropagation();
+                    openLightbox(images, i, title);
+                });
+            });
+        });
     </script>
 </body>
+
 </html>
